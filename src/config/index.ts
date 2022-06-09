@@ -1,4 +1,4 @@
-import { ChainId } from '@pancakeswap/sdk'
+// import { ChainId } from '@pancakeswap/sdk'
 import BigNumber from 'bignumber.js/bignumber'
 import { BIG_TEN } from 'utils/bigNumber'
 
@@ -9,11 +9,20 @@ BigNumber.config({
 
 export const BSC_BLOCK_TIME = 3
 
+export const ChainId = {
+  MAINNET: 1,
+  TESTNET: 5,
+}
+
 export const BASE_BSC_SCAN_URLS = {
   [ChainId.MAINNET]: 'https://bscscan.com',
   [ChainId.TESTNET]: 'https://testnet.bscscan.com',
 }
 
+export const BASE_ETHER_SCAN_URLS = {
+  [ChainId.MAINNET]: 'https://etherscan.io',
+  [ChainId.TESTNET]: 'https://rinkeby.etherscan.io/',
+}
 // CAKE_PER_BLOCK details
 // 40 CAKE is minted per block
 // 20 CAKE per block is sent to Burn pool (A farm just for burning cake)

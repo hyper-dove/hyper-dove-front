@@ -10,7 +10,7 @@ import {
   WalletConnectConnector,
 } from '@web3-react/walletconnect-connector'
 import { ConnectorNames, connectorLocalStorageKey, Text, Box, LinkExternal } from '@pancakeswap/uikit'
-import { connectorsByName } from 'utils/web3React'
+import { activateInjectedProvider, connectorsByName } from 'utils/web3React'
 import { setupNetwork } from 'utils/wallet'
 import useToast from 'hooks/useToast'
 import { useAppDispatch } from 'state'
@@ -20,22 +20,29 @@ import { clearUserStates } from '../utils/clearUserStates'
 const useAuth = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { chainId, activate, deactivate, setError } = useWeb3React()
+  const { chainId, activate, deactivate, setError, library } = useWeb3React()
   const { toastError } = useToast()
 
   const login = useCallback(
-    async (connectorID: ConnectorNames) => {
-      console.log('connectorID = ', connectorID)
+    async (connectorID: ConnectorNames, connectorTitle?: string) => {
+      console.log('connectorID = ', connectorID, connectorTitle)
       console.log('connectorsByName = ', connectorsByName)
+      //metamask OR coinbase
+      //coinbase injector같은경우 메타마스크랑 동시에 뜨는 경우가 있어서 이처럼 예외처리
+      if (connectorTitle === 'Metamask' || connectorTitle === 'Coinbase Wallet') {
+        activateInjectedProvider(connectorTitle)
+      }
       const connectorOrGetConnector = connectorsByName[connectorID]
       const connector =
         typeof connectorOrGetConnector !== 'function' ? connectorsByName[connectorID] : await connectorOrGetConnector()
-
       if (typeof connector !== 'function' && connector) {
+        console.log('connector = ', connector)
         activate(connector, async (error: Error) => {
+          console.log('error ', error)
           if (error instanceof UnsupportedChainIdError) {
             setError(error)
             const provider = await connector.getProvider()
+            //
             const hasSetup = await setupNetwork(provider)
             if (hasSetup) {
               activate(connector)
@@ -43,6 +50,7 @@ const useAuth = () => {
           } else {
             window?.localStorage?.removeItem(connectorLocalStorageKey)
             if (error instanceof NoEthereumProviderError || error instanceof NoBscProviderError) {
+              alert('provider error')
               toastError(
                 t('Provider Error'),
                 <Box>
@@ -61,6 +69,7 @@ const useAuth = () => {
                 walletConnector.walletConnectProvider = null
               }
               toastError(t('Authorization Error'), t('Please authorize to access your account'))
+              alert('Authorization Error')
             } else {
               toastError(error.name, error.message)
             }

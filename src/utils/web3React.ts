@@ -24,23 +24,45 @@ const walletconnect = new WalletConnectConnector({
 
 const bscConnector = new BscConnector({ supportedChainIds: [chainId] })
 
+export function activateInjectedProvider(providerName: 'Metamask' | 'Coinbase Wallet') {
+  const { ethereum } = window
+  console.log('ethereum = ', ethereum)
+  if (!ethereum?.providers) {
+    return undefined
+  }
+
+  let provider
+  switch (providerName) {
+    case 'Coinbase Wallet':
+      provider = ethereum.providers.find(({ isCoinbaseWallet }) => isCoinbaseWallet)
+      break
+    case 'Metamask':
+      provider = ethereum.providers.find(({ isMetaMask }) => isMetaMask)
+      break
+  }
+  console.log('provider ', provider)
+  if (provider) {
+    ethereum.setSelectedProvider(provider)
+  }
+}
+
 export const connectorsByName = {
   [ConnectorNames.Injected]: injected,
   [ConnectorNames.WalletConnect]: walletconnect,
-  [ConnectorNames.BSC]: bscConnector,
-  [ConnectorNames.Blocto]: async () => {
-    const { BloctoConnector } = await import('@blocto/blocto-connector')
-    return new BloctoConnector({ chainId, rpc: rpcUrl })
-  },
-  [ConnectorNames.WalletLink]: async () => {
-    const { WalletLinkConnector } = await import('@web3-react/walletlink-connector')
-    return new WalletLinkConnector({
-      url: rpcUrl,
-      appName: 'PancakeSwap',
-      appLogoUrl: 'https://pancakeswap.com/logo.png',
-      supportedChainIds: [ChainId.MAINNET, ChainId.TESTNET],
-    })
-  },
+  // [ConnectorNames.BSC]: bscConnector,
+  // [ConnectorNames.Blocto]: async () => {
+  //   const { BloctoConnector } = await import('@blocto/blocto-connector')
+  //   return new BloctoConnector({ chainId, rpc: rpcUrl })
+  // },
+  // [ConnectorNames.WalletLink]: async () => {
+  //   const { WalletLinkConnector } = await import('@web3-react/walletlink-connector')
+  //   return new WalletLinkConnector({
+  //     url: rpcUrl,
+  //     appName: 'test',
+  //     appLogoUrl: 'https://pancakeswap.com/logo.png',
+  //     supportedChainIds: [ChainId.MAINNET, ChainId.TESTNET],
+  //   })
+  // },
 } as const
 
 export const getLibrary = (provider): Web3Provider => {

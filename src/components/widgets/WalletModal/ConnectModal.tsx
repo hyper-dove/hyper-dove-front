@@ -52,7 +52,7 @@ const getPreferredConfig = (walletConfig: Config[]) => {
   ]
 }
 
-const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null, displayCount = 3, t }) => {
+const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null, displayCount = 4, t }) => {
   const [showMore, setShowMore] = useState(false)
   const theme = useTheme()
   const sortedConfig = getPreferredConfig(config)
@@ -78,10 +78,10 @@ const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null, displayC
                 <WalletCard walletConfig={wallet} login={login} onDismiss={onDismiss} />
               </Box>
             ))}
-            {!showMore && <MoreWalletCard t={t} onClick={() => setShowMore(true)} />}
+            {/* {!showMore && <MoreWalletCard t={t} onClick={() => setShowMore(true)} />} */}
           </Grid>
         </WalletWrapper>
-        <Box p="24px">
+        {/* <Box p="24px">
           <Text textAlign="center" color="textSubtle" as="p" mb="16px">
             {t('Haven’t got a crypto wallet yet?')}
           </Text>
@@ -94,7 +94,7 @@ const ConnectModal: React.FC<Props> = ({ login, onDismiss = () => null, displayC
           >
             {t('Learn How to Connect')}
           </Button>
-        </Box>
+        </Box> */}
       </ModalBody>
     </ModalContainer>
   )

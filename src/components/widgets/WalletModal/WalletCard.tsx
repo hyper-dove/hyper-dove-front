@@ -45,7 +45,7 @@ const WalletCard: React.FC<Props> = ({ login, walletConfig, onDismiss }) => {
       onClick={() => {
         // TW point to WC on desktop
         if (title === 'Trust Wallet' && walletConnectConfig && isDesktop) {
-          login(walletConnectConfig.connectorId)
+          login(walletConnectConfig.connectorId, title)
           localStorage?.setItem(walletLocalStorageKey, walletConnectConfig.title)
           localStorage?.setItem(connectorLocalStorageKey, walletConnectConfig.connectorId)
           onDismiss()
@@ -54,7 +54,7 @@ const WalletCard: React.FC<Props> = ({ login, walletConfig, onDismiss }) => {
         if (!window.ethereum && walletConfig.href) {
           window.open(walletConfig.href, '_blank', 'noopener noreferrer')
         } else {
-          login(walletConfig.connectorId)
+          login(walletConfig.connectorId, title)
           localStorage?.setItem(walletLocalStorageKey, walletConfig.title)
           localStorage?.setItem(connectorLocalStorageKey, walletConfig.connectorId)
           onDismiss()

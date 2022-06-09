@@ -1,19 +1,19 @@
 // Set of helper functions to facilitate wallet setup
 
 import { ExternalProvider } from '@ethersproject/providers'
-import { ChainId } from '@pancakeswap/sdk'
+// import { ChainId } from '@pancakeswap/sdk'
 // import { BAD_SRCS } from 'components/Logo/Logo'
-import { BASE_BSC_SCAN_URLS } from 'config'
+import { BASE_BSC_SCAN_URLS, BASE_ETHER_SCAN_URLS, ChainId } from 'config'
 import { nodes } from './getRpcUrl'
 
 const NETWORK_CONFIG = {
   [ChainId.MAINNET]: {
-    name: 'BNB Smart Chain Mainnet',
-    scanURL: BASE_BSC_SCAN_URLS[ChainId.MAINNET],
+    name: 'ether Mainnet',
+    scanURL: BASE_ETHER_SCAN_URLS[ChainId.MAINNET],
   },
   [ChainId.TESTNET]: {
-    name: 'BNB Smart Chain Testnet',
-    scanURL: BASE_BSC_SCAN_URLS[ChainId.TESTNET],
+    name: 'rinkeby Chain Testnet',
+    scanURL: BASE_ETHER_SCAN_URLS[ChainId.TESTNET],
   },
 }
 
