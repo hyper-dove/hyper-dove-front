@@ -46,6 +46,12 @@ const connectors: Config[] = [
     connectorId: ConnectorNames.WalletConnect,
     priority: 3,
   },
+  {
+    title: 'Fortmatic',
+    icon: Blocto,
+    connectorId: ConnectorNames.Fortmatic,
+    priority: 999,
+  },
   // {
   //   title: 'Opera Wallet',
   //   icon: Opera,

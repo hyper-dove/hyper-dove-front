@@ -17,16 +17,26 @@ import { useAppDispatch } from 'state'
 import { useTranslation } from 'contexts/Localization'
 import { clearUserStates } from '../utils/clearUserStates'
 
+import Fortmatic from 'fortmatic'
+import Web3 from 'web3'
+
 const useAuth = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { chainId, activate, deactivate, setError, library } = useWeb3React()
   const { toastError } = useToast()
+  let fm = new Fortmatic(process.env.FORTMATIC_KEY)
 
   const login = useCallback(
-    async (connectorID: ConnectorNames, connectorTitle?: string) => {
+    async (connectorID: ConnectorNames, connectorTitle: string) => {
       console.log('connectorID = ', connectorID, connectorTitle)
       console.log('connectorsByName = ', connectorsByName)
+
+      if (connectorTitle === 'Fortmatic') {
+        const web3 = new Web3(fm.getProvider())
+        web3.currentProvider.enable()
+      }
+
       //metamask OR coinbase
       //coinbase injector같은경우 메타마스크랑 동시에 뜨는 경우가 있어서 이처럼 예외처리
       if (connectorTitle === 'Metamask' || connectorTitle === 'Coinbase Wallet') {
