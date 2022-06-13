@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useState, useCallback } from 'react'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { NoBscProviderError } from '@binance-chain/bsc-connector'
 import {
@@ -25,8 +25,8 @@ const useAuth = () => {
   const dispatch = useAppDispatch()
   const { chainId, activate, deactivate, setError, library } = useWeb3React()
   const { toastError } = useToast()
-  let fm = new Fortmatic(process.env.FORTMATIC_KEY)
-
+  const fm = new Fortmatic(process.env.NEXT_PUBLIC_FORTMATIC_KEY)
+  const [fortmaticAccount, setFortmaticAccount] = useState(null)
   const login = useCallback(
     async (connectorID: ConnectorNames, connectorTitle: string) => {
       console.log('connectorID = ', connectorID, connectorTitle)
@@ -34,7 +34,9 @@ const useAuth = () => {
 
       if (connectorTitle === 'Fortmatic') {
         const web3 = new Web3(fm.getProvider())
-        web3.currentProvider.enable()
+        window.web3 = web3
+        window.web3.currentProvider.enable()
+        //console.log(fm.getProvider().isFortmatic, web3.currentProvider.isFortmatic)
       }
 
       //metamask OR coinbase
@@ -98,7 +100,7 @@ const useAuth = () => {
     clearUserStates(dispatch, chainId, true)
   }, [deactivate, dispatch, chainId])
 
-  return { login, logout }
+  return { login, logout, fm }
 }
 
 export default useAuth

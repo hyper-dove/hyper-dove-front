@@ -3,19 +3,42 @@ import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { useEffect, useState } from 'react'
 import useToast from 'hooks/useToast'
 import useAuth from 'hooks/useAuth'
+import useFortmatic from 'hooks/useFortmatic'
 import { useTranslation } from 'contexts/Localization'
 import { Box } from 'components/Common/Box'
 import { Text } from 'components/Common/Text'
 import { signMessage } from 'utils/web3React'
 import useWeb3Provider from 'hooks/useActiveWeb3React'
+declare global {
+  interface Window {
+    web3: any
+  }
+}
 
 const IndexPage = () => {
+  const [fortmaticAccount, setFortmaticAccount] = useState('')
+
   const { account, error } = useWeb3React()
+  const { logout, fm } = useAuth()
   const { library, connector } = useWeb3Provider()
   const { toastSuccess, toastError } = useToast()
   const { t } = useTranslation()
-  const { logout } = useAuth()
-  console.log(account)
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    console.log('window.web3.currentProvider = ', window.web3.currentProvider)
+    if (window.web3.currentProvider.isFortmatic && fm) {
+      setIsLoading(true)
+      fm.user.login().then(() => {
+        window.web3.eth.getAccounts().then((account) => {
+          console.log('account = ', account)
+          setFortmaticAccount(account)
+          setIsLoading(false)
+        }) // ['0x...']
+      })
+    }
+  }, [window.web3.currentProvider, setFortmaticAccount])
+
   useEffect(() => {
     if (account) {
       toastSuccess(
@@ -34,11 +57,11 @@ const IndexPage = () => {
       )
     }
   }, [account, error])
+
   const handleDisconnect = () => {
     logout()
   }
 
-  const [isLoading, setIsLoading] = useState(false)
   const sign = async () => {
     try {
       setIsLoading(true)
@@ -74,11 +97,13 @@ const IndexPage = () => {
 
   return (
     <div>
-      {account && <button>{account}</button>}
+      {isLoading ? <div>LOADING</div> : <div>LOADING END </div>}
+      {fortmaticAccount && <button>{fortmaticAccount}</button>}
+
+      {account && <button>genric {account}</button>}
       {account && <button onClick={handleDisconnect}>disconnect</button>}
       {account && <button onClick={sign}>sign</button>}
       {!account && <ConnectWalletButton scale="sm" />}
-
       <div></div>
     </div>
   )
