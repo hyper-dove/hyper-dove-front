@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic'
 import BigNumber from 'bignumber.js'
 // import GlobalCheckClaimStatus from 'components/GlobalCheckClaimStatus'
 // import FixedSubgraphHealthIndicator from 'components/SubgraphHealthIndicator'
-// import { ToastListener } from 'contexts/ToastsContext'
+import { ToastListener } from 'contexts/ToastsContext'
 // import useEagerConnect from 'hooks/useEagerConnect'
 // import { useAccountEventListener } from 'hooks/useAccountEventListener'
 // import useSentryUser from 'hooks/useSentryUser'
@@ -116,7 +116,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
           <Component {...pageProps} />
         </Layout>
       </Menu>
-      {/* <ToastListener /> */}
+      <ToastListener />
       {/* <FixedSubgraphHealthIndicator /> */}
     </>
   )

@@ -6,7 +6,7 @@ import { Box } from 'components/Common/Box'
 import Flex from 'components/Common/Box/Flex'
 // import Footer from 'components/Footer';
 // import MenuItems from 'components/MenuItems/MenuItems'
-// import { SubMenuItems } from 'components/SubMenuItems';
+import { SubMenuItems } from 'components/Common/SubMenuItems'
 import useMatchBreakpoints from 'hooks/useMatchBreakpoints'
 // import CakePrice from "../../components/CakePrice/CakePrice";
 import Logo from './components/Logo'
@@ -132,7 +132,7 @@ const Menu: React.FC<NavProps> = ({
           {banner && <TopBannerContainer height={topBannerHeight}>{banner}</TopBannerContainer>}
           <StyledNav>
             <Flex>
-              {/* <Logo isDark={isDark} href={homeLink?.href ?? '/'} /> */}
+              {/* <Logo isDark={isDark} href={'/'} /> */}
               {/* {!isMobile && <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} ml="24px" />} */}
             </Flex>
             <Flex alignItems="center" height="100%">
@@ -153,24 +153,20 @@ const Menu: React.FC<NavProps> = ({
             </Flex>
           </StyledNav>
         </FixedContainer>
-        {/* {subLinks && (
+        {subLinks && (
           <Flex justifyContent="space-around">
-            <SubMenuItems
-              items={subLinksWithoutMobile}
-              mt={`${totalTopMenuHeight + 1}px`}
-              activeItem={activeSubItem}
-            />
+            <SubMenuItems items={subLinksWithoutMobile} mt={`${totalTopMenuHeight + 1}px`} activeItem={activeSubItem} />
 
-            {subLinksMobileOnly?.length > 0 && (
+            {/* {subLinksMobileOnly?.length > 0 && (
               <SubMenuItems
                 items={subLinksMobileOnly}
                 mt={`${totalTopMenuHeight + 1}px`}
                 activeItem={activeSubItem}
                 isMobileOnly
               />
-            )}
+            )} */}
           </Flex>
-        )} */}
+        )}
         <BodyWrapper mt={!subLinks ? `${totalTopMenuHeight + 1}px` : '0'}>
           <Inner isPushed={false} showMenu={showMenu}>
             {children}

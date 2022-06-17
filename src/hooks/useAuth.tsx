@@ -27,11 +27,12 @@ const useAuth = () => {
   const { toastError } = useToast()
   const fm = new Fortmatic(process.env.NEXT_PUBLIC_FORTMATIC_KEY)
   const [fortmaticAccount, setFortmaticAccount] = useState(null)
+
   const login = useCallback(
     async (connectorID: ConnectorNames, connectorTitle: string) => {
       console.log('connectorID = ', connectorID, connectorTitle)
       console.log('connectorsByName = ', connectorsByName)
-
+      console.log('chainId = ', chainId)
       if (connectorTitle === 'Fortmatic') {
         const web3 = new Web3(fm.getProvider())
         window.web3 = web3

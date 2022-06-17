@@ -14,7 +14,15 @@ const POLLING_INTERVAL = 12000
 const rpcUrl = getNodeUrl()
 const chainId = parseInt(CHAIN_ID, 10)
 
-export const injected = new InjectedConnector({ supportedChainIds: [chainId] })
+export const injected = new InjectedConnector({
+  supportedChainIds: [
+    1, // Mainet
+    3, // Ropsten
+    4, // Rinkeby
+    5, // Goerli
+    42, // Kovan
+  ],
+})
 
 const walletconnect = new WalletConnectConnector({
   rpc: { [chainId]: rpcUrl },
@@ -50,7 +58,7 @@ export const connectorsByName = {
   [ConnectorNames.Injected]: injected,
   [ConnectorNames.WalletConnect]: walletconnect,
   // [ConnectorNames.BSC]: bscConnector,
-  // [ConnectorNames.Blocto]: async () => {
+  // [ConnectorNames.Blocto]: async () => {ㅇ
   //   const { BloctoConnector } = await import('@blocto/blocto-connector')
   //   return new BloctoConnector({ chainId, rpc: rpcUrl })
   // },
@@ -81,20 +89,20 @@ export const signMessage = async (
   account: string,
   message: string,
 ): Promise<string> => {
-  if (window.BinanceChain && connector instanceof BscConnector) {
-    const { signature } = await window.BinanceChain.bnbSign(account, message)
-    return signature
-  }
+  // if (window.BinanceChain && connector instanceof BscConnector) {
+  //   const { signature } = await window.BinanceChain.bnbSign(account, message)
+  //   return signature
+  // }
 
-  /**
-   * Wallet Connect does not sign the message correctly unless you use their method
-   * @see https://github.com/WalletConnect/walletconnect-monorepo/issues/462
-   */
-  if (provider.provider?.wc) {
-    const wcMessage = hexlify(toUtf8Bytes(message))
-    const signature = await provider.provider?.wc.signPersonalMessage([wcMessage, account])
-    return signature
-  }
+  // /**
+  //  * Wallet Connect does not sign the message correctly unless you use their method
+  //  * @see https://github.com/WalletConnect/walletconnect-monorepo/issues/462
+  //  */
+  // if (provider.provider?.wc) {
+  //   const wcMessage = hexlify(toUtf8Bytes(message))
+  //   const signature = await provider.provider?.wc.signPersonalMessage([wcMessage, account])
+  //   return signature
+  // }d
 
-  return provider.getSigner(account).signMessage(message)
+  return provider.getSigner().signMessage(message)
 }

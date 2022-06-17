@@ -1,4 +1,8 @@
 export default {
+  nftMarketPlace: {
+    1: '0xdDCF4B8e70b8AD39dfd5E22c07153C4413624f5f',
+    4: '0xdDCF4B8e70b8AD39dfd5E22c07153C4413624f5f',
+  },
   masterChef: {
     97: '',
     56: '0xa5f8C5Dbd5F286960b9d90548680aE5ebFf07652',
@@ -114,5 +118,9 @@ export default {
   pancakeSquad: {
     56: '0x0a8901b0E25DEb55A87524f0cC164E9644020EBA',
     97: '0xfC0c3F11fDA72Cb9A56F28Ec8D44C0ae4B3ABF86',
+  },
+  dove: {
+    4: '0xf1274137c42a443b97eB641961888A9c5E97387D',
+    1: '0xf1274137c42a443b97eB641961888A9c5E97387D',
   },
 }
