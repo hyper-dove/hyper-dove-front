@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Box } from 'components/Common/Box'
 import Flex from 'components/Common/Box/Flex'
 // import Footer from 'components/Footer';
-// import MenuItems from 'components/MenuItems/MenuItems'
+import MenuItems from 'components/Common/MenuItems/MenuItems'
 import { SubMenuItems } from 'components/Common/SubMenuItems'
 import useMatchBreakpoints from 'hooks/useMatchBreakpoints'
 // import CakePrice from "../../components/CakePrice/CakePrice";
@@ -120,7 +120,7 @@ const Menu: React.FC<NavProps> = ({
   }, [totalTopMenuHeight])
 
   // Find the home link if provided
-  //const homeLink = links.find((link) => link.label === 'Home')
+  const homeLink = links.find((link) => link.label === 'Home')
 
   const subLinksWithoutMobile = subLinks?.filter((subLink) => !subLink.isMobileOnly)
   const subLinksMobileOnly = subLinks?.filter((subLink) => subLink.isMobileOnly)
@@ -133,7 +133,7 @@ const Menu: React.FC<NavProps> = ({
           <StyledNav>
             <Flex>
               {/* <Logo isDark={isDark} href={'/'} /> */}
-              {/* {!isMobile && <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} ml="24px" />} */}
+              {!isMobile && <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} ml="24px" />}
             </Flex>
             <Flex alignItems="center" height="100%">
               {!isMobile && !isMd && (

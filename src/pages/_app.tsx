@@ -19,7 +19,7 @@ import { useStore, persistor } from 'state'
 import { NextPage } from 'next'
 import { Blocklist, Updaters } from '..'
 // import ErrorBoundary from '../components/ErrorBoundary'
-import { Menu } from 'components/widgets/Menu'
+import Menu from 'components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
 

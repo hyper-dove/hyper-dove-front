@@ -4,7 +4,7 @@ import { usePopper } from 'react-popper'
 import useOnClickOutside from 'hooks/useOnClickOutside'
 import { MenuContext } from 'components/widgets/Menu/context'
 import { Box, Flex } from '../Box'
-import { LogoutIcon } from 'components/Svg'
+// import { LogoutIcon } from 'components/Svg'
 import {
   DropdownMenuDivider,
   DropdownMenuItem,
@@ -135,7 +135,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
                     >
                       <Flex alignItems="center" justifyContent="space-between" width="100%">
                         {label}
-                        <LogoutIcon />
+                        {/* <LogoutIcon /> */}
                       </Flex>
                     </DropdownMenuItem>
                   )}

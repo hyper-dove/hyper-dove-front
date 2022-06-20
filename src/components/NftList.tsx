@@ -11,6 +11,8 @@ import { getNftMarketPlaceContract } from 'utils/contractHelpers'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import useCatchTxError from 'hooks/useCatchTxError'
 import { useNftMarketPlaceContract } from 'hooks/useContract'
+import { Input } from 'components/Common/Input'
+import { Flex } from 'components/Common/Box'
 
 const client = ipfsHttpClient('https://ipfs.infura.io:5001/api/v0')
 
@@ -68,13 +70,10 @@ export default function CreateItem() {
   }
 
   return (
-    <div className="flex justify-center">
-      <div className="w-1/2 flex flex-col pb-12">
-        <input
-          placeholder="Asset Name"
-          className="mt-8 border rounded p-4"
-          onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
-        />
+    <Flex>
+      <Flex flexDirection="column">
+        <Input placeholder="Asset Name" onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })} />
+
         <textarea
           placeholder="Asset Description"
           className="mt-2 border rounded p-4"
@@ -90,7 +89,7 @@ export default function CreateItem() {
         <button onClick={listNFTForSale} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
           Create NFT
         </button>
-      </div>
-    </div>
+      </Flex>
+    </Flex>
   )
 }
