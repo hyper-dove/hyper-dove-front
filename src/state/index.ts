@@ -26,7 +26,7 @@ import IndexedDBStorage from 'utils/IndexedDBStorage'
 // import nftMarketReducer from './nftMarket/reducer'
 // import poolsReducer from './pools'
 // import swap from './swap/reducer'
-// import transactions from './transactions/reducer'
+import transactions from './transactions/reducer'
 import user from './user/reducer'
 // import limitOrders from './limitOrders/reducer'
 
@@ -79,7 +79,7 @@ const persistedReducer = persistReducer(
     // limitOrders,
     // // Exchange
     user,
-    // transactions,
+    transactions,
     // swap,
     // mint,
     // burn,

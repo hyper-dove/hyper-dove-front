@@ -13,8 +13,8 @@ export function useCallWithGasPrice() {
    * @param contract Used to perform the call
    * @param methodName The name of the method called
    * @param methodArgs An array of arguments to pass to the method
-   * @param overrides An overrides object to pass to the method. gasPrice passed in here will take priority over the price returned by useGasPrice
-   * @returns https://docs.ethers.io/v5/api/providers/types/#providers-TransactionReceipt
+   * @param overridAn overrides object to pass to the method. gasPrice passed in here will take priority over the price returned by useGasPrice
+   * @returns https://docs.ethers.ies o/v5/api/providers/types/#providers-TransactionReceipt
    */
   const callWithGasPrice = useCallback(
     async (
@@ -25,7 +25,7 @@ export function useCallWithGasPrice() {
     ): Promise<TransactionResponse> => {
       // Sentry.addBreadcrumb({
       //   type: 'Transaction',
-      //   message: `Call with gas price: ${gasPrice}`,
+      //   message: `Call with gas price: ${gasPrice}`
       //   data: {
       //     contractAddress: contract.address,
       //     methodName,
@@ -33,14 +33,17 @@ export function useCallWithGasPrice() {
       //     overrides,
       //   },
       // })
+
       const contractMethod = get(contract, methodName)
       const hasManualGasPriceOverride = overrides?.gasPrice
-      console.log('contractMethod = ', contractMethod)
-      console.log('hasManualGasPriceOverride = ', hasManualGasPriceOverride)
       const tx = await contractMethod(
         ...methodArgs,
         hasManualGasPriceOverride ? { ...overrides } : { ...overrides, gasPrice },
       )
+
+      console.log('contract = ', contract)
+      console.log('contractMethod = ', contractMethod)
+      console.log('hasManualGasPriceOverride = ', hasManualGasPriceOverride)
       console.log('tx = ', tx)
       // if (tx) {
       //   Sentry.addBreadcrumb({

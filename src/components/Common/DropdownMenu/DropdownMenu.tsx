@@ -4,6 +4,7 @@ import { usePopper } from 'react-popper'
 import useOnClickOutside from 'hooks/useOnClickOutside'
 import { MenuContext } from 'components/widgets/Menu/context'
 import { Box, Flex } from '../Box'
+import { useRouter } from 'next/router'
 // import { LogoutIcon } from 'components/Svg'
 import {
   DropdownMenuDivider,
@@ -35,6 +36,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
     modifiers: [{ name: 'offset', options: { offset: [0, isBottomNav ? 6 : 0] } }],
   })
 
+  const router = useRouter()
   const isMenuShow = isOpen && ((isBottomNav && showItemsOnMobile) || !isBottomNav)
 
   useEffect(() => {
@@ -112,10 +114,11 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
                   {type === DropdownMenuItemType.INTERNAL_LINK && (
                     <DropdownMenuItem
                       $isActive={isActive}
-                      as={linkComponent}
-                      href={href}
+                      // as={linkComponent}
+                      // href={href}
                       onClick={() => {
                         setIsOpen(false)
+                        router.push(href)
                       }}
                       {...itemProps}
                     >

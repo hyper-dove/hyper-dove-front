@@ -7,12 +7,7 @@ import { PoolCategory } from 'config/constants/types'
 import tokens from 'config/constants/tokens'
 
 // Addresses
-import {
-  getPancakeSquadAddress,
-  getNftSaleAddress,
-  getDoveAddress,
-  getNftMarketPlaceAddress,
-} from 'utils/addressHelpers'
+import { getDoveAddress, getNftMarketPlaceAddress } from 'utils/addressHelpers'
 
 // ABI
 import bep20Abi from 'config/abi/erc20.json'
@@ -40,9 +35,9 @@ export const getBep20Contract = (address: string, signer?: Signer | Provider) =>
 export const getErc721Contract = (address: string, signer?: Signer | Provider) => {
   return getContract(erc721Abi, address, signer) as Erc721
 }
-export const getPancakeSquadContract = (signer?: Signer | Provider) => {
-  return getContract(pancakeSquadAbi, getPancakeSquadAddress(), signer) as PancakeSquad
-}
+// export const getPancakeSquadContract = (signer?: Signer | Provider) => {
+//   return getContract(pancakeSquadAbi, getPancakeSquadAddress(), signer) as PancakeSquad
+// }
 export const getErc721CollectionContract = (signer?: Signer | Provider, address?: string) => {
   return getContract(erc721CollectionAbi, address, signer) as Erc721collection
 }
@@ -51,6 +46,6 @@ export const getDoveContract = (signer?: Signer | Provider) => {
   return getContract(doveAbi, getDoveAddress(), signer) as Erc721collection
 }
 
-export const getNftSaleContract = (signer?: Signer | Provider) => {
-  return getContract(nftSaleAbi, getNftSaleAddress(), signer) as Erc721collection
-}
+// export const getNftSaleContract = (signer?: Signer | Provider) => {
+//   return getContract(nftSaleAbi, getNftSaleAddress(), signer) as Erc721collection
+// }

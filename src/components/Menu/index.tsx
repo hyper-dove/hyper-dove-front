@@ -8,7 +8,7 @@ import { useTranslation } from 'contexts/Localization'
 import useTheme from 'hooks/useTheme'
 // import { usePriceCakeBusd } from 'state/farms/hooks'
 import { usePhishingBannerManager } from 'state/user/hooks'
-// import UserMenu from './UserMenu'
+import UserMenu from './UserMenu'
 import { useMenuItems } from './hooks/useMenuItems'
 // import GlobalSettings from './GlobalSettings'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
@@ -38,7 +38,7 @@ const Menu = (props) => {
       //   linkComponent={(linkProps) => {
       //     return <NextLinkFromReactRouter to={linkProps.href} {...linkProps} prefetch={false} />
       //   }}
-      //     userMenu={<UserMenu />}
+      userMenu={<UserMenu />}
       //   globalMenu={<GlobalSettings />}
       //banner={showPhishingWarningBanner && typeof window !== 'undefined' && <PhishingWarningBanner />}
       isDark={isDark}

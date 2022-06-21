@@ -3,13 +3,13 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import {
   getBep20Contract,
   getErc721Contract,
-  getPancakeSquadContract,
+  //  getPancakeSquadContract,
   getErc721CollectionContract,
-  getNftSaleContract,
+  // getNftSaleContract,
   getNftMarketPlaceContract,
   getDoveContract,
 } from 'utils/contractHelpers'
-import { getMulticallAddress } from 'utils/addressHelpers'
+// import { getMulticallAddress } from 'utils/addressHelpers'
 import { Erc20, Erc20Bytes32, Multicall, Weth, Cake, Erc721collection, CakeVaultV2 } from 'config/abi/types'
 
 // Imports below migrated from Exchange useContract.ts
@@ -27,8 +27,12 @@ import { IPancakePair } from '../config/abi/types/IPancakePair'
 /**
  * Helper hooks to get specific contracts (by ABI)
  */
-export const useNftMarketPlaceContract = () => {
-  const { library } = useActiveWeb3React()
+export const useNftMarketPlaceContract = (withSignerIfPossible = true) => {
+  const { library, account } = useActiveWeb3React()
+  // const signer = useMemo(
+  //   () => (withSignerIfPossible ? getProviderOrSigner(library, account) : null),
+  //   [withSignerIfPossible, library, account],
+  // )
   return useMemo(() => getNftMarketPlaceContract(library.getSigner()), [library])
 }
 
@@ -37,10 +41,10 @@ export const useDoveContract = () => {
   return useMemo(() => getDoveContract(library.getSigner()), [library])
 }
 
-export const useNftSaleContract = () => {
-  const { library } = useActiveWeb3React()
-  return useMemo(() => getNftSaleContract(library.getSigner()), [library])
-}
+// export const useNftSaleContract = () => {
+//   const { library } = useActiveWeb3React()
+//   return useMemo(() => getNftSaleContract(library.getSigner()), [library])
+// }
 
 export const useERC20 = (address: string, withSignerIfPossible = true) => {
   const { library, account } = useActiveWeb3React()
@@ -63,10 +67,10 @@ export const useERC721 = (address: string, withSignerIfPossible = true) => {
   return useMemo(() => getErc721Contract(address, signer), [address, signer])
 }
 
-export const usePancakeSquadContract = () => {
-  const { library } = useActiveWeb3React()
-  return useMemo(() => getPancakeSquadContract(library.getSigner()), [library])
-}
+// export const usePancakeSquadContract = () => {
+//   const { library } = useActiveWeb3React()
+//   return useMemo(() => getPancakeSquadContract(library.getSigner()), [library])
+// }
 
 export const useErc721CollectionContract = (
   collectionAddress: string,
@@ -128,6 +132,6 @@ export function usePairContract(pairAddress?: string, withSignerIfPossible?: boo
   return useContract(pairAddress, IPancakePairABI, withSignerIfPossible)
 }
 
-export function useMulticallContract() {
-  return useContract<Multicall>(getMulticallAddress(), multiCallAbi, false)
-}
+// export function useMulticallContract() {
+//   return useContract<Multicall>(getMulticallAddress(), multiCallAbi, false)
+// }

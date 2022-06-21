@@ -1,6 +1,7 @@
 import { ethers } from 'ethers'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Box } from 'components/Common'
 import Web3Modal from 'web3modal'
 import { useRouter } from 'next/router'
 import { useNftMarketPlaceContract } from 'hooks/useContract'

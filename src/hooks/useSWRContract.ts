@@ -10,7 +10,7 @@ import useSWR, {
   // eslint-disable-next-line camelcase
   unstable_serialize,
 } from 'swr'
-import { multicallv2, MulticallOptions, Call } from 'utils/multicall'
+// import { multicallv2, MulticallOptions, Call } from 'utils/multicall'
 
 declare module 'swr' {
   interface SWRResponse<Data = any, Error = any> {
@@ -140,14 +140,14 @@ export const immutableMiddleware: Middleware = (useSWRNext) => (key, fetcher, co
   return useSWRNext(key, fetcher, config)
 }
 
-export function useSWRMulticall<Data>(abi: any[], calls: Call[], options?: MulticallOptions & SWRConfiguration) {
-  const { requireSuccess = true, ...config } = options || {}
-  return useSWR<Data>(calls, () => multicallv2(abi, calls, { requireSuccess }), {
-    revalidateIfStale: false,
-    revalidateOnFocus: false,
-    ...config,
-  })
-}
+// export function useSWRMulticall<Data>(abi: any[], calls: Call[], options?: MulticallOptions & SWRConfiguration) {
+//   const { requireSuccess = true, ...config } = options || {}
+//   return useSWR<Data>(calls, () => multicallv2(abi, calls, { requireSuccess }), {
+//     revalidateIfStale: false,
+//     revalidateOnFocus: false,
+//     ...config,
+//   })
+// }
 
 export const localStorageMiddleware: Middleware = (useSWRNext) => (key, fetcher, config) => {
   const swr = useSWRNext(key, fetcher, config)
