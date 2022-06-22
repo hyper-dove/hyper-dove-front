@@ -29,6 +29,9 @@ import { IPancakePair } from '../config/abi/types/IPancakePair'
  */
 export const useNftMarketPlaceContract = (withSignerIfPossible = true) => {
   const { library, account } = useActiveWeb3React()
+  // console.log('[seo] useNftMarketPlaceContract= ')
+  // console.log('[seo] library= ', library)
+  // console.log('[seo] account= ', account)
   // const signer = useMemo(
   //   () => (withSignerIfPossible ? getProviderOrSigner(library, account) : null),
   //   [withSignerIfPossible, library, account],

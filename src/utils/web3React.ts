@@ -32,7 +32,7 @@ const walletconnect = new WalletConnectConnector({
 
 const bscConnector = new BscConnector({ supportedChainIds: [chainId] })
 
-export function activateInjectedProvider(providerName: 'Metamask' | 'Coinbase Wallet') {
+export async function activateInjectedProvider(providerName: 'Metamask' | 'Coinbase Wallet') {
   const { ethereum } = window
   console.log('ethereum = ', ethereum)
   if (!ethereum?.providers) {
@@ -52,6 +52,7 @@ export function activateInjectedProvider(providerName: 'Metamask' | 'Coinbase Wa
   if (provider) {
     ethereum.setSelectedProvider(provider)
   }
+  return true
 }
 
 export const connectorsByName = {

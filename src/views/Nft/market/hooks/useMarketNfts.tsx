@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { ethers } from 'ethers'
+
 import { useNftMarketPlaceContract } from 'hooks/useContract'
 
 const useMarketNfts = () => {
+  const { chainId, account, error } = useWeb3React()
   const [nfts, setNfts] = useState([])
   const [isFetchingNfts, setIsFetchingNfts] = useState(false)
   const nffMarketPlaceContract = useNftMarketPlaceContract(false)
@@ -36,8 +39,8 @@ const useMarketNfts = () => {
   }
 
   useEffect(() => {
-    loadNFTs()
-  }, [])
+    if (account) loadNFTs()
+  }, [account])
 
   return { nfts, isFetchingNfts }
 }

@@ -8,7 +8,7 @@ import getLocalStorageItemKeys from './getLocalStorageItemKeys'
 
 export const clearUserStates = (dispatch: Dispatch<any>, chainId: number, isDeactive = false) => {
   dispatch(resetUserState({ chainId }))
-  //Sentry.configureScope((scope) => scope.setUser(null))
+  Sentry.configureScope((scope) => scope.setUser(null))
   // This localStorage key is set by @web3-react/walletconnect-connector
   if (window?.localStorage?.getItem('walletconnect')) {
     connectorsByName.walletconnect.close()

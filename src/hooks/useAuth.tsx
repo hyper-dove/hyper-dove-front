@@ -25,15 +25,16 @@ const useAuth = () => {
   const dispatch = useAppDispatch()
   const { chainId, activate, deactivate, setError, library } = useWeb3React()
   const { toastError } = useToast()
-  const fm = new Fortmatic(process.env.NEXT_PUBLIC_FORTMATIC_KEY)
+
   const [fortmaticAccount, setFortmaticAccount] = useState(null)
 
   const login = useCallback(
     async (connectorID: ConnectorNames, connectorTitle: string) => {
-      console.log('connectorID = ', connectorID, connectorTitle)
-      console.log('connectorsByName = ', connectorsByName)
-      console.log('chainId = ', chainId)
-      if (connectorTitle === 'Fortmatic') {
+      console.log('[seo] connectorID = ', connectorID, connectorTitle)
+      console.log('[seo] connectorsByName = ', connectorsByName)
+      console.log('[seo] chainId = ', chainId)
+      if (window && connectorTitle === 'Fortmatic') {
+        const fm = new Fortmatic(process.env.NEXT_PUBLIC_FORTMATIC_KEY)
         const web3 = new Web3(fm.getProvider())
         window.web3 = web3
         window.web3.currentProvider.enable()
@@ -43,15 +44,19 @@ const useAuth = () => {
       //metamask OR coinbase
       //coinbase injector같은경우 메타마스크랑 동시에 뜨는 경우가 있어서 이처럼 예외처리
       if (connectorTitle === 'Metamask' || connectorTitle === 'Coinbase Wallet') {
-        activateInjectedProvider(connectorTitle)
+        console.log('[seo]', await activateInjectedProvider(connectorTitle))
       }
+      console.log('[seo] 2')
       const connectorOrGetConnector = connectorsByName[connectorID]
       const connector =
         typeof connectorOrGetConnector !== 'function' ? connectorsByName[connectorID] : await connectorOrGetConnector()
+
+      console.log('[seo] connectorOrGetConnector = ', connectorOrGetConnector)
+      console.log('[seo] connector = ', connector)
+
       if (typeof connector !== 'function' && connector) {
-        console.log('connector = ', connector)
         activate(connector, async (error: Error) => {
-          console.log('error ', error)
+          console.log('[seo]error ', error)
           if (error instanceof UnsupportedChainIdError) {
             setError(error)
             const provider = await connector.getProvider()
@@ -101,7 +106,7 @@ const useAuth = () => {
     clearUserStates(dispatch, chainId, true)
   }, [deactivate, dispatch, chainId])
 
-  return { login, logout, fm }
+  return { login, logout }
 }
 
 export default useAuth

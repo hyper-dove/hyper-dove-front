@@ -5,8 +5,8 @@ import BigNumber from 'bignumber.js'
 // import GlobalCheckClaimStatus from 'components/GlobalCheckClaimStatus'
 // import FixedSubgraphHealthIndicator from 'components/SubgraphHealthIndicator'
 import { ToastListener } from 'contexts/ToastsContext'
-// import useEagerConnect from 'hooks/useEagerConnect'
-// import { useAccountEventListener } from 'hooks/useAccountEventListener'
+import useEagerConnect from 'hooks/useEagerConnect'
+import { useAccountEventListener } from 'hooks/useAccountEventListener'
 // import useSentryUser from 'hooks/useSentryUser'
 // import useUserAgent from 'hooks/useUserAgent'
 import type { AppProps } from 'next/app'
@@ -31,10 +31,10 @@ BigNumber.config({
 
 function GlobalHooks() {
   // usePollBlockNumber()
-  // useEagerConnect()
+  useEagerConnect()
   // usePollCoreFarmData()
   // useUserAgent()
-  // useAccountEventListener()
+  useAccountEventListener()
   // useSentryUser()
   return null
 }
