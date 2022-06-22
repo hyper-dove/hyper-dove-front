@@ -10,7 +10,7 @@ const CollectibleLinkCard: React.FC<CollectibleCardProps> = ({ nft, nftLocation,
 
   return (
     <StyledCollectibleCard {...props}>
-      <NextLinkFromReactRouter to={`${nftsBaseUrl}/collections/${nft.collectionAddress}/`}>
+      <NextLinkFromReactRouter to={`/${nftsBaseUrl}/market/${nft.tokenId}/`}>
         <CardBody nft={nft} nftLocation={nftLocation} currentAskPrice={currentAskPrice} />
       </NextLinkFromReactRouter>
     </StyledCollectibleCard>

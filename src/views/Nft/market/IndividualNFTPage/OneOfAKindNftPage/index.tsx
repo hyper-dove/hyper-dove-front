@@ -6,6 +6,8 @@ import Page from 'components/Layout/Page'
 import { useGetCollection } from 'state/nftMarket/hooks'
 import CircleLoader from 'components/Loader/CircleLoader'
 import MainNFTCard from './MainNFTCard'
+import useMarketNfts from 'views/Nft/market/hooks/useMarketNfts'
+import { useGetEthBalance } from 'hooks/useTokenBalance'
 // import ManageNFTsCard from './ManageNFTsCard'
 import { TwoColumnsContainer } from '../shared/styles'
 // import PropertiesCard from '../shared/PropertiesCard'
@@ -26,6 +28,9 @@ const OwnerActivityContainer = styled(Flex)`
 `
 
 const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress, tokenId }) => {
+  const { nfts, isFetchingNfts } = useMarketNfts()
+  console.log('nfts = ', nfts, ' tokenId= ', tokenId)
+  const nft = nfts.find((nft) => nft.tokenId.toString() === tokenId)
   // const collection = useGetCollection(collectionAddress)
   // const { data: distributionData, isFetching: isFetchingDistribution } = useGetCollectionDistribution(collectionAddress)
   // const {
@@ -53,8 +58,8 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
   //   }
   //   return {}
   // }, [properties, isFetchingDistribution, distributionData])
-
-  if (!nft || !collection) {
+  console.log('nft= ', nft)
+  if (!nft) {
     // Normally we already show a 404 page here if no nft, just put this checking here for safety.
 
     // For now this if is used to show loading spinner while we're getting the data
@@ -63,7 +68,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
 
   return (
     <Page>
-      <MainNFTCard nft={nft} isOwnNft={isOwnNft} nftIsProfilePic={isProfilePic} onSuccess={refetch} />
+      <MainNFTCard nft={nft} isOwnNft={false} nftIsProfilePic={false} onSuccess={() => {}} />
       <TwoColumnsContainer flexDirection={['column', 'column', 'row']}>
         <Flex flexDirection="column" width="100%">
           {/* <ManageNFTsCard nft={nft} isOwnNft={isOwnNft} isLoading={isLoading} onSuccess={refetch} />

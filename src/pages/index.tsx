@@ -20,7 +20,8 @@ import EthBalance from 'components/EthBalance'
 import NftList from 'components/NftList'
 import axios from 'axios'
 import { getNftMarketPlaceAddress } from 'utils/addressHelpers'
-import { useNftMarketPlaceContract } from 'hooks/useContract'
+import { useNftMarketPlaceContract, useNftMarketPlaceContract2 } from 'hooks/useContract'
+import BuyModal from 'views/Nft/market/components/BuySellModals/BuyModal'
 
 const ethUtil = require('ethereumjs-util')
 
@@ -32,9 +33,10 @@ declare global {
 
 const IndexPage = ({ theme }) => {
   const nffMarketPlaceContract = useNftMarketPlaceContract()
+  const { reader, signer } = useNftMarketPlaceContract2()
   const [fortmaticAccount, setFortmaticAccount] = useState('')
   const { chainId, account, error } = useWeb3React()
-  const { logout, fm } = useAuth()
+  const { logout } = useAuth()
   const { library, connector } = useWeb3Provider()
   const { toastSuccess, toastError } = useToast()
   const { t } = useTranslation()
@@ -61,6 +63,10 @@ const IndexPage = ({ theme }) => {
     />,
     false,
   )
+
+  const [onPresentBuyModal] = useModal(<BuyModal nftToBuy={nft} />)
+
+  console.log('reader  ', reader)
 
   useEffect(() => {
     console.log('window.web3.currentProvider = ', window.web3.currentProvider)
@@ -220,7 +226,7 @@ const IndexPage = ({ theme }) => {
     // const contract = getNftMarketPlaceContract(library)
     // const provider = new ethers.providers.JsonRpcProvider()
     // const contract = new ethers.Contract(marketplaceAddress, NftMarketPlace, provider)
-    const data = await nffMarketPlaceContract.fetchMarketItems()
+    const data = await reader.fetchMarketItems()
     console.log('data = ', data)
     /*
      *  map over items returned from smart contract and format
@@ -228,7 +234,7 @@ const IndexPage = ({ theme }) => {
      */
     const items = await Promise.all(
       data.map(async (i) => {
-        const tokenUri = await nffMarketPlaceContract.tokenURI(i.tokenId)
+        const tokenUri = await reader.tokenURI(i.tokenId)
         const meta = await axios.get(tokenUri)
         let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
         let item = {

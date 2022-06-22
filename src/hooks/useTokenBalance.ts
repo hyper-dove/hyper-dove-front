@@ -43,6 +43,15 @@ export const useTotalSupply = () => {
   return data ? new BigNumber(data.toString()) : null
 }
 
+export const useGetEthBalance = () => {
+  const { account } = useWeb3React()
+  const { status, data, mutate } = useSWR([account, 'ethBalance'], async () => {
+    return simpleRpcProvider.getBalance(account)
+  })
+
+  return { balance: data || Zero, fetchStatus: status, refresh: mutate }
+}
+
 export const useGetBnbBalance = () => {
   const { account } = useWeb3React()
   const { status, data, mutate } = useSWR([account, 'bnbBalance'], async () => {

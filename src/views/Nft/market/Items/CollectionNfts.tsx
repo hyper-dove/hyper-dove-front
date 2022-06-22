@@ -5,16 +5,19 @@ import { useTranslation } from 'contexts/Localization'
 import GridPlaceholder from '../components/GridPlaceholder'
 import { CollectibleLinkCard } from '../components/CollectibleCard'
 import useMarketNfts from '../hooks/useMarketNfts'
-
+import { useGetEthBalance } from 'hooks/useTokenBalance'
 interface CollectionNftsProps {
   // collection: Collection
 }
 
 const CollectionNfts: React.FC<CollectionNftsProps> = () => {
   // const { address: collectionAddress } = collection || {}
+  const { balance, fetchStatus, refresh } = useGetEthBalance()
   const { t } = useTranslation()
   const { nfts, isFetchingNfts } = useMarketNfts()
   console.log('nfts= ', nfts)
+
+  console.log(balance)
   // const handleLoadMore = useCallback(() => {
   //   setPage(page + 1)
   // }, [setPage, page])

@@ -25,8 +25,8 @@ export const getContract = (abi: any, address: string, signer?: Signer | Provide
   console.log('address = ', address, signerOrProvider)
   return new Contract(address, abi, signerOrProvider)
 }
-export const getNftMarketPlaceContract = (signer?: Signer | Provider) => {
-  return getContract(NFTMarketplaceAbi, getNftMarketPlaceAddress(), signer)
+export const getNftMarketPlaceContract = (signer?: Signer | Provider, address?: string) => {
+  return getContract(NFTMarketplaceAbi, getNftMarketPlaceAddress(), signer) as any
 }
 
 export const getBep20Contract = (address: string, signer?: Signer | Provider) => {

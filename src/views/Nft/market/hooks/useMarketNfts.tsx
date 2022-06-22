@@ -3,15 +3,17 @@ import axios from 'axios'
 import { useWeb3React, UnsupportedChainIdError } from '@web3-react/core'
 import { ethers } from 'ethers'
 
-import { useNftMarketPlaceContract } from 'hooks/useContract'
+import { useNftMarketPlaceContract, useNftMarketPlaceContract2 } from 'hooks/useContract'
 
 const useMarketNfts = () => {
   const { chainId, account, error } = useWeb3React()
   const [nfts, setNfts] = useState([])
   const [isFetchingNfts, setIsFetchingNfts] = useState(false)
   const nffMarketPlaceContract = useNftMarketPlaceContract(false)
+  const { reader, signer } = useNftMarketPlaceContract2()
+
   async function loadNFTs() {
-    const data = await nffMarketPlaceContract.fetchMarketItems()
+    const data = await reader.fetchMarketItems()
     console.log('data = ', data)
     /*
      *  map over items returned from smart contract and format
@@ -19,7 +21,7 @@ const useMarketNfts = () => {
      */
     const items = await Promise.all(
       data.map(async (i) => {
-        const tokenUri = await nffMarketPlaceContract.tokenURI(i.tokenId)
+        const tokenUri = await reader.tokenURI(i.tokenId)
         const meta = await axios.get(tokenUri)
         let price = ethers.utils.formatUnits(i.price.toString(), 'ether')
         let item = {

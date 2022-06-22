@@ -1,16 +1,19 @@
-import { BinanceIcon, Box, Button, Card, CardBody, Flex, Skeleton, Text, useModal } from '@pancakeswap/uikit'
+import { BinanceIcon, Box, Button, Card, CardBody, Flex, Skeleton, Text } from '@pancakeswap/uikit'
+import { useModal } from 'components/widgets/Modal'
 import { useTranslation } from 'contexts/Localization'
-import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
+// import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
 
 import { NftToken } from 'state/nftMarket/types'
 import { multiplyPriceByAmount } from 'utils/prices'
 import { formatNumber } from 'utils/formatBalance'
 import NFTMedia from 'views/Nft/market/components/NFTMedia'
-import EditProfileModal from 'views/Nft/market/Profile/components/EditProfileModal'
-import BuyModal from '../../../components/BuySellModals/BuyModal'
-import SellModal from '../../../components/BuySellModals/SellModal'
-import { nftsBaseUrl } from '../../../constants'
+// import EditProfileModal from 'views/Nft/market/Profile/components/EditProfileModal'
+import BuyModal from 'views/Nft/market/components/BuySellModals/BuyModal'
+// import SellModal from 'views/Nft/market/components/BuySellModals/SellModal'
+import { nftsBaseUrl } from 'views/Nft/market/constants'
 import { CollectionLink, Container } from '../shared/styles'
+import { useGetEthBalance } from 'hooks/useTokenBalance'
+import { formatEther } from '@ethersproject/units'
 
 interface MainNFTCardProps {
   nft: NftToken
@@ -21,16 +24,16 @@ interface MainNFTCardProps {
 
 const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePic, onSuccess }) => {
   const { t } = useTranslation()
-  const bnbBusdPrice = useBNBBusdPrice()
-
-  const currentAskPriceAsNumber = nft?.marketData?.currentAskPrice ? parseFloat(nft.marketData?.currentAskPrice) : 0
-  const priceInUsd = multiplyPriceByAmount(bnbBusdPrice, currentAskPriceAsNumber)
+  // const bnbBusdPrice = useBNBBusdPrice()
+  // const currentAskPriceAsNumber = nft?.marketData?.currentAskPrice ? parseFloat(nft.marketData?.currentAskPrice) : 0
+  // const priceInUsd = multiplyPriceByAmount(bnbBusdPrice, currentAskPriceAsNumber)
   const [onPresentBuyModal] = useModal(<BuyModal nftToBuy={nft} />)
-  const [onPresentSellModal] = useModal(
-    <SellModal variant={nft.marketData?.isTradable ? 'edit' : 'sell'} nftToSell={nft} onSuccessSale={onSuccess} />,
-  )
-  const [onEditProfileModal] = useModal(<EditProfileModal />, false)
-
+  // const [onPresentSellModal] = useModal(
+  //   <SellModal variant={nft.marketData?.isTradable ? 'edit' : 'sell'} nftToSell={nft} onSuccessSale={onSuccess} />,
+  // )
+  // const [onEditProfileModal] = useModal(<EditProfileModal />, false)
+  const { balance } = useGetEthBalance()
+  console.log('eth balance  = ', balance, parseFloat(formatEther(balance)).toPrecision(4))
   const ownerButtons = (
     <Flex flexDirection={['column', 'column', 'row']}>
       <Button
@@ -39,11 +42,11 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
         mr="16px"
         width={['100%', null, 'max-content']}
         mt="24px"
-        onClick={onPresentSellModal}
+        // onClick={onPresentSellModal}
       >
         {nft.marketData?.isTradable ? t('Adjust price') : t('List for sale')}
       </Button>
-      {!nft.marketData?.isTradable && (
+      {/* {!nft.marketData?.isTradable && (
         <Button
           minWidth="168px"
           variant="secondary"
@@ -53,7 +56,7 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
         >
           {nftIsProfilePic ? t('Change Profile Pic') : t('Set as Profile Pic')}
         </Button>
-      )}
+      )} */}
     </Flex>
   )
 
@@ -73,7 +76,7 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
               <Text color="textSubtle" mt={['16px', '16px', '48px']}>
                 {t('Price')}
               </Text>
-              {currentAskPriceAsNumber > 0 ? (
+              {/* {currentAskPriceAsNumber > 0 ? (
                 <Flex alignItems="center" mt="8px">
                   <BinanceIcon width={18} height={18} mr="4px" />
                   <Text fontSize="24px" bold mr="4px">
@@ -90,7 +93,7 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
                 </Flex>
               ) : (
                 <Text>{t('Not for sale')}</Text>
-              )}
+              )} */}
               {nftIsProfilePic && (
                 <Text color="failure">
                   {t(
@@ -102,11 +105,11 @@ const MainNFTCard: React.FC<MainNFTCardProps> = ({ nft, isOwnNft, nftIsProfilePi
               {!isOwnNft && (
                 <Button
                   minWidth="168px"
-                  disabled={!nft.marketData?.isTradable}
+                  // disabled={!nft.marketData?.isTradable}
                   mr="16px"
                   width={['100%', null, 'max-content']}
                   mt="24px"
-                  onClick={onPresentBuyModal}
+                  onClick={() => onPresentBuyModal()}
                 >
                   {t('Buy')}
                 </Button>

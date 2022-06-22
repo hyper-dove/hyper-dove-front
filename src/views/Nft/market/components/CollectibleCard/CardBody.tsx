@@ -46,9 +46,6 @@ const CollectibleCardBody: React.FC<any> = ({ nft, nftLocation, currentAskPrice,
           </MetaRow>
         )} */}
       </Box>
-      <button className="mt-4 w-full bg-pink-500 text-white font-bold py-2 px-12 rounded" onClick={() => buyNft(nft)}>
-        Buy
-      </button>
     </CardBody>
   )
 }
