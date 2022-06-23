@@ -5,7 +5,7 @@ import { ethers } from 'ethers'
 
 import { useNftMarketPlaceContract, useNftMarketPlaceContract2 } from 'hooks/useContract'
 
-const useMarketNfts = () => {
+const useMarketNfts = (isMyNft = false) => {
   const { chainId, account, error } = useWeb3React()
   const [nfts, setNfts] = useState([])
   const [isFetchingNfts, setIsFetchingNfts] = useState(false)
@@ -13,7 +13,7 @@ const useMarketNfts = () => {
   const { reader, signer } = useNftMarketPlaceContract2()
 
   async function loadNFTs() {
-    const data = await reader.fetchMarketItems()
+    const data = isMyNft ? await signer.fetchMyNFTs() : await reader.fetchMarketItems()
     console.log('data = ', data)
     /*
      *  map over items returned from smart contract and format

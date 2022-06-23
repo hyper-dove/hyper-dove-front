@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { Spinner } from '@pancakeswap/uikit'
+import CircleLoader from 'components/Loader/CircleLoader'
+
 import Page from '../Layout/Page'
 
 const Wrapper = styled(Page)`
@@ -11,7 +12,7 @@ const Wrapper = styled(Page)`
 const PageLoader: React.FC = () => {
   return (
     <Wrapper>
-      <Spinner />
+      <CircleLoader size={'84px'} />
     </Wrapper>
   )
 }

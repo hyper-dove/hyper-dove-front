@@ -228,8 +228,12 @@ export interface ConnectedBidder {
 }
 
 export enum FetchStatus {
-  Idle = 'IDLE',
+  // Idle = 'IDLE' ,
   Fetching = 'FETCHING',
   Fetched = 'FETCHED',
   Failed = 'FAILED',
+  Error = 'error',
+  Idle = 'idle',
+  Loading = 'loading',
+  Success = 'success',
 }

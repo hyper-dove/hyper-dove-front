@@ -12,7 +12,7 @@ import BuyModal from 'views/Nft/market/components/BuySellModals/BuyModal'
 // import SellModal from 'views/Nft/market/components/BuySellModals/SellModal'
 import { nftsBaseUrl } from 'views/Nft/market/constants'
 import { CollectionLink, Container } from '../shared/styles'
-import { useGetEthBalance } from 'hooks/useTokenBalance'
+import { useGetEthBalance, useGetEthBalance_ } from 'hooks/useTokenBalance'
 import { formatEther } from '@ethersproject/units'
 
 interface MainNFTCardProps {

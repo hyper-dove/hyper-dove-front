@@ -3,14 +3,14 @@ import { InjectedModalProps } from '@pancakeswap/uikit'
 import { MaxUint256, Zero } from '@ethersproject/constants'
 import useTheme from 'hooks/useTheme'
 import { useTranslation, TranslateFunction } from 'contexts/Localization'
-import useTokenBalance, { useGetEthBalance } from 'hooks/useTokenBalance'
+import useTokenBalance, { useGetEthBalance, useGetEthBalance_ } from 'hooks/useTokenBalance'
 // import { getBalanceNumber } from 'utils/formatBalance'
 // import { ethersToBigNumber } from 'utils/bigNumber'
 // import tokens from 'config/constants/tokens'
 // import { CHAIN_ID } from 'config/constants/networks'
 // import { ChainId } from '@pancakeswap/sdk'
 import { parseUnits, formatEther } from '@ethersproject/units'
-import { useERC20, useNftMarketPlaceContract } from 'hooks/useContract'
+import { useERC20, useNftMarketPlaceContract, useNftMarketPlaceContract2 } from 'hooks/useContract'
 import { useWeb3React } from '@web3-react/core'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 // import useApproveConfirmTransaction from 'hooks/useApproveConfirmTransaction'
@@ -53,7 +53,7 @@ const BuyModal: React.FC<BuyModalProps> = ({ nftToBuy, onDismiss }) => {
   const { account } = useWeb3React()
   // const wbnbContractReader = useERC20(wbnbAddress, false)
   // const wbnbContractApprover = useERC20(wbnbAddress)
-  const nffMarketPlaceContract = useNftMarketPlaceContract()
+  const { reader, signer } = useNftMarketPlaceContract2()
 
   const { toastSuccess } = useToast()
 
@@ -61,16 +61,17 @@ const BuyModal: React.FC<BuyModalProps> = ({ nftToBuy, onDismiss }) => {
   const nftPrice = parseFloat(nftToBuy?.price)
 
   // BNB - returns ethers.BigNumber
-  const { balance, fetchStatus: walletFetchStatus } = useGetEthBalance()
+  const { balance, fetchStatus: walletFetchStatus } = useGetEthBalance_()
   const formattedEthBalance = formatEther(balance)
+  console.log('formattedEthBalance = ', formattedEthBalance)
+  console.log('nftPriceWei = ', nftPriceWei)
   // WBNB - returns BigNumber
   // const { balance: wbnbBalance, fetchStatus: wbnbFetchStatus } = useTokenBalance(wbnbAddress)
   // const formattedWbnbBalance = getBalanceNumber(wbnbBalance)
-
   // const walletFetchStatus = paymentCurrency === PaymentCurrency.BNB ? bnbFetchStatus : wbnbFetchStatus
 
-  const notEnoughEthForPurchase = nftPriceWei.lt(formattedEthBalance)
-
+  const notEnoughEthForPurchase = nftToBuy?.price > formattedEthBalance
+  // const notEnoughEthForPurchase = true
   // useEffect(() => {
   //   if (bnbBalance.lt(nftPriceWei) && wbnbBalance.gte(ethersToBigNumber(nftPriceWei)) && !isPaymentCurrentInitialized) {
   //     setPaymentCurrency(PaymentCurrency.WBNB)
@@ -114,15 +115,14 @@ const BuyModal: React.FC<BuyModalProps> = ({ nftToBuy, onDismiss }) => {
   //   },
   // })
 
-  async function buyNft(nft) {
+  async function buyNft() {
     /* needs the user to sign the transaction, so will use Web3Provider and sign it */
 
     /* user will be prompted to pay the asking proces to complete the transaction */
-    const price = parseUnits(nftToBuy?.price.toString(), 'ether')
 
     const receipt = await fetchWithCatchTxError(() => {
-      return callWithGasPrice(nffMarketPlaceContract, 'createMarketSale', [nft.tokenId], {
-        value: price,
+      return callWithGasPrice(signer, 'createMarketSale', [nftToBuy.tokenId], {
+        value: nftPriceWei,
       })
     })
 
@@ -164,9 +164,9 @@ const BuyModal: React.FC<BuyModalProps> = ({ nftToBuy, onDismiss }) => {
         paymentCurrency={paymentCurrency}
         setPaymentCurrency={setPaymentCurrency}
         nftPrice={nftPrice}
-        // walletBalance={formattedEthBalance}
+        walletBalance={parseFloat(formattedEthBalance)}
         walletFetchStatus={walletFetchStatus}
-        notEnoughBnbForPurchase={notEnoughEthForPurchase}
+        notEnoughEthForPurchase={notEnoughEthForPurchase}
         continueToNextStage={continueToNextStage}
       />
       {/* {stage === BuyingStage.REVIEW && (

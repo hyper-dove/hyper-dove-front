@@ -1,6 +1,7 @@
 import styled from 'styled-components'
-import { Modal, Grid, Flex, Text, BinanceIcon, Skeleton } from '@pancakeswap/uikit'
+import { Modal, Grid, Flex, Text, Skeleton } from '@pancakeswap/uikit'
 // import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
+import { EtheriumIcon } from 'components/Common/Svg'
 import { multiplyPriceByAmount } from 'utils/prices'
 import { BuyingStage } from './types'
 
@@ -32,13 +33,13 @@ export const BorderedBox = styled(Grid)`
   grid-row-gap: 8px;
 `
 
-interface BnbAmountCellProps {
-  bnbAmount: number
+interface EthAmountCellProps {
+  ethAmount: number
   isLoading?: boolean
   isInsufficient?: boolean
 }
 
-export const BnbAmountCell: React.FC<BnbAmountCellProps> = ({ bnbAmount, isLoading, isInsufficient }) => {
+export const EthAmountCell: React.FC<EthAmountCellProps> = ({ ethAmount, isLoading, isInsufficient }) => {
   // const bnbBusdPrice = useBNBBusdPrice()
   if (isLoading) {
     return (
@@ -52,8 +53,8 @@ export const BnbAmountCell: React.FC<BnbAmountCellProps> = ({ bnbAmount, isLoadi
   return (
     <Flex justifySelf="flex-end" flexDirection="column">
       <Flex justifyContent="flex-end">
-        <BinanceIcon height={16} width={16} mr="4px" />
-        <Text bold color={isInsufficient ? 'failure' : 'text'}>{`${bnbAmount.toLocaleString(undefined, {
+        <EtheriumIcon height={16} width={16} mr="4px" />
+        <Text bold color={isInsufficient ? 'failure' : 'text'}>{`${ethAmount.toLocaleString(undefined, {
           minimumFractionDigits: 3,
           maximumFractionDigits: 5,
         })}`}</Text>

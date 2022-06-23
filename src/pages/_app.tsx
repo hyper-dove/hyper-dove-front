@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { ResetCSS } from '@pancakeswap/uikit'
 import Script from 'next/script'
 import dynamic from 'next/dynamic'
@@ -19,9 +20,12 @@ import { useStore, persistor } from 'state'
 import { NextPage } from 'next'
 import { Blocklist, Updaters } from '..'
 // import ErrorBoundary from '../components/ErrorBoundary'
+import { Hydrate, QueryClient, QueryClientProvider } from 'react-query'
+import { ReactQueryDevtools } from 'react-query/devtools'
 import Menu from 'components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
+import useBaseQueryClient from 'hooks/queries/useBaseQueryClient'
 
 // This config is required for number formatting
 BigNumber.config({
@@ -42,7 +46,7 @@ function GlobalHooks() {
 function MyApp(props: AppProps) {
   const { pageProps } = props
   const store = useStore(pageProps.initialReduxState)
-
+  const queryClient = useBaseQueryClient()
   return (
     <>
       <Head>
@@ -64,18 +68,24 @@ function MyApp(props: AppProps) {
         <meta name="twitter:title" content="" />
         <title>🕊</title>
       </Head>
-      <Providers store={store}>
-        <Blocklist>
-          <GlobalHooks />
-          <ResetCSS />
-          <GlobalStyle />
-          {/* <GlobalCheckClaimStatus excludeLocations={[]} /> */}
-          <PersistGate loading={null} persistor={persistor}>
-            {/* <Updaters /> */}
-            <App {...props} />
-          </PersistGate>
-        </Blocklist>
-      </Providers>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Providers store={store}>
+            <Blocklist>
+              <GlobalHooks />
+              <ResetCSS />
+              <GlobalStyle />
+              {/* <GlobalCheckClaimStatus excludeLocations={[]} /> */}
+              <PersistGate loading={null} persistor={persistor}>
+                {/* <Updaters /> */}
+                <App {...props} />
+              </PersistGate>
+            </Blocklist>
+          </Providers>
+        </Hydrate>
+
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
       <Script
         strategy="afterInteractive"
         id="google-tag"

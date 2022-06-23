@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import { MenuContext } from '../../widgets/Menu/context'
 import StyledMenuItem, { StyledMenuItemContainer } from './styles'
 import { MenuItemProps } from './types'
+import Link from 'next/link'
 
 const MenuItem: React.FC<MenuItemProps> = ({
   children,
@@ -21,11 +22,19 @@ const MenuItem: React.FC<MenuItemProps> = ({
         as: 'div',
       }
   return (
-    <StyledMenuItemContainer $isActive={isActive} $variant={variant}>
-      <StyledMenuItem {...itemLinkProps} $isActive={isActive} $variant={variant} $statusColor={statusColor} {...props}>
-        {children}
-      </StyledMenuItem>
-    </StyledMenuItemContainer>
+    <Link href={href}>
+      <StyledMenuItemContainer $isActive={isActive} $variant={variant}>
+        <StyledMenuItem
+          {...itemLinkProps}
+          $isActive={isActive}
+          $variant={variant}
+          $statusColor={statusColor}
+          {...props}
+        >
+          {children}
+        </StyledMenuItem>
+      </StyledMenuItemContainer>
+    </Link>
   )
 }
 

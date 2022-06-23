@@ -5,6 +5,8 @@ import { FAST_INTERVAL, SLOW_INTERVAL } from 'config/constants'
 import { BigNumber as EthersBigNumber } from '@ethersproject/bignumber'
 import { Zero } from '@ethersproject/constants'
 import useSWR from 'swr'
+import { useMutation, useQuery } from 'react-query'
+
 import { BIG_ZERO } from 'utils/bigNumber'
 import { simpleRpcProvider } from 'utils/providers'
 import { useTokenContract } from './useContract'
@@ -43,11 +45,25 @@ export const useTotalSupply = () => {
   return data ? new BigNumber(data.toString()) : null
 }
 
+export const useGetEthBalance_ = () => {
+  const { account } = useWeb3React()
+  const { status, data, error } = useQuery([account, 'ethBalance'], () => {
+    return simpleRpcProvider.getBalance(account)
+  })
+
+  // const { status, data, mutate } = useQuery([account, 'ethBalance'], async () => {
+  //   return simpleRpcProvider.getBalance(account)
+  // })
+  console.log('[seo] useGetEthBalance ', status, data)
+  return { balance: data || Zero, fetchStatus: status }
+}
 export const useGetEthBalance = () => {
   const { account } = useWeb3React()
   const { status, data, mutate } = useSWR([account, 'ethBalance'], async () => {
     return simpleRpcProvider.getBalance(account)
   })
+
+  //console.log('[seo] useGetEthBalance ', status, data, mutate)
 
   return { balance: data || Zero, fetchStatus: status, refresh: mutate }
 }

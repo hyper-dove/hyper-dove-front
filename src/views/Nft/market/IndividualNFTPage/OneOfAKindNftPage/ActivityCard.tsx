@@ -3,14 +3,14 @@ import { Flex, Card, Text, useMatchBreakpoints, Table, Th, ArrowBackIcon, ArrowF
 import { useTranslation } from 'contexts/Localization'
 import useTheme from 'hooks/useTheme'
 import { Activity, NftToken } from 'state/nftMarket/types'
-import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
-import { useAppDispatch } from '../../../../../../state'
-import NoNftsImage from '../../../components/Activity/NoNftsImage'
-import TableLoader from '../../../../../../components/TableLoader'
-import { Arrow, PageButtons } from '../../../components/PaginationButtons'
-import { getTokenActivity } from '../../../../../../state/nftMarket/helpers'
-import { sortActivity } from '../../../ActivityHistory/utils/sortActivity'
-import ActivityRow from '../../../components/Activity/ActivityRow'
+// import { useBNBBusdPrice } from 'hooks/useBUSDPrice'
+import { useAppDispatch } from 'state'
+import NoNftsImage from 'views/Nft/market/components/Activity/NoNftsImage'
+// import TableLoader from '../../../../../../components/TableLoader'
+// import { Arrow, PageButtons } from '../../../components/PaginationButtons'
+// import { getTokenActivity } from '../../../../../../state/nftMarket/helpers'
+// import { sortActivity } from '../../../ActivityHistory/utils/sortActivity'
+// import ActivityRow from '../../../components/Activity/ActivityRow'
 
 interface ActivityCardProps {
   nft: NftToken
@@ -27,7 +27,7 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ nft }) => {
   const [activitiesSlice, setActivitiesSlice] = useState<Activity[]>([])
   const [sortedTokenActivities, setSortedTokenActivities] = useState<Activity[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const bnbBusdPrice = useBNBBusdPrice()
+  // const bnbBusdPrice = useBNBBusdPrice()
   const { isXs, isSm } = useMatchBreakpoints()
 
   useEffect(() => {
@@ -116,7 +116,7 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ nft }) => {
               )}
             </tbody>
           </Table>
-          <Flex
+          {/* <Flex
             borderTop={`1px ${theme.colors.cardBorder} solid`}
             pt="24px"
             flexDirection="column"
@@ -140,7 +140,7 @@ const ActivityCard: React.FC<ActivityCardProps> = ({ nft }) => {
                 <ArrowForwardIcon color={currentPage === maxPage ? 'textDisabled' : 'primary'} />
               </Arrow>
             </PageButtons>
-          </Flex>
+          </Flex> */}
         </>
       )}
     </Card>

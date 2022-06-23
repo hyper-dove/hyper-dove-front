@@ -64,7 +64,7 @@ const IndexPage = ({ theme }) => {
     false,
   )
 
-  const [onPresentBuyModal] = useModal(<BuyModal nftToBuy={nft} />)
+  // const [onPresentBuyModal] = useModal(<BuyModal nftToBuy={nft} />)
 
   console.log('reader  ', reader)
 
@@ -293,7 +293,7 @@ const IndexPage = ({ theme }) => {
       {account && <button onClick={handleDisconnect}>disconnect</button>}
       {account && <button onClick={sign}>sign</button>}
       {!fortmaticAccount && !account && <ConnectWalletButton scale="sm" />}
-      <Button width="100%" onClick={mintTokenCallBack} disabled={isLoading} endIcon={isLoading ? <div /> : undefined}>
+      {/* <Button width="100%" onClick={mintTokenCallBack} disabled={isLoading} endIcon={isLoading ? <div /> : undefined}>
         {t('Mint NFTs (%tickets%)', { tickets: 'test' })}
       </Button>
 
@@ -331,7 +331,7 @@ const IndexPage = ({ theme }) => {
             ))}
           </Grid>
         </Container>
-      </Box>
+      </Box> */}
     </div>
   )
 }

@@ -10,6 +10,7 @@ import useMarketNfts from 'views/Nft/market/hooks/useMarketNfts'
 import { useGetEthBalance } from 'hooks/useTokenBalance'
 // import ManageNFTsCard from './ManageNFTsCard'
 import { TwoColumnsContainer } from '../shared/styles'
+import PageLoader from 'components/Loader/PageLoader'
 // import PropertiesCard from '../shared/PropertiesCard'
 // import DetailsCard from '../shared/DetailsCard'
 // import useGetCollectionDistribution from '../../../hooks/useGetCollectionDistribution'
@@ -63,7 +64,7 @@ const IndividualNFTPage: React.FC<IndividualNFTPageProps> = ({ collectionAddress
     // Normally we already show a 404 page here if no nft, just put this checking here for safety.
 
     // For now this if is used to show loading spinner while we're getting the data
-    return <CircleLoader />
+    return <PageLoader />
   }
 
   return (
