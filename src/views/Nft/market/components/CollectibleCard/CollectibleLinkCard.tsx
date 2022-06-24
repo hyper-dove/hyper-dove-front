@@ -4,7 +4,13 @@ import CardBody from './CardBody'
 import { CollectibleCardProps } from './types'
 import { nftsBaseUrl } from '../../constants'
 
-const CollectibleLinkCard: React.FC<CollectibleCardProps> = ({ nft, nftLocation, currentAskPrice, ...props }) => {
+const CollectibleLinkCard: React.FC<CollectibleCardProps> = ({
+  nft,
+  nftLocation,
+  currentAskPrice,
+
+  ...props
+}) => {
   // const urlId =
   //   nft.collectionAddress.toLowerCase() === pancakeBunniesAddress.toLowerCase() ? nft.attributes[0].value : nft.tokenId
 

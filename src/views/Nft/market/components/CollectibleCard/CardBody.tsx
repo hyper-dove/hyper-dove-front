@@ -9,7 +9,7 @@ import { CollectibleCardProps } from './types'
 // import { pancakeBunniesAddress } from '../../constants'
 import NFTMedia from '../NFTMedia'
 
-const CollectibleCardBody: React.FC<any> = ({ nft, nftLocation, currentAskPrice, isUserNft }) => {
+const CollectibleCardBody: React.FC<any> = ({ nft, nftLocation, currentAskPrice, isUserNft, sellToken }) => {
   const { t } = useTranslation()
   const { name, description, price } = nft
   //const bnbBusdPrice = useBNBBusdPrice()
@@ -45,6 +45,7 @@ const CollectibleCardBody: React.FC<any> = ({ nft, nftLocation, currentAskPrice,
             <CostLabel cost={currentAskPrice}  />
           </MetaRow>
         )} */}
+        {isUserNft && <button onClick={() => sellToken(nft)}>sell</button>}
       </Box>
     </CardBody>
   )

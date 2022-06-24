@@ -1,9 +1,9 @@
 import { Flex, Grid, Text, Button, Link, BinanceIcon, LinkExternal, useModal } from '@pancakeswap/uikit'
 import { useTranslation } from 'contexts/Localization'
-import { nftsBaseUrl, pancakeBunniesAddress } from 'views/Nft/market/constants'
+import { nftsBaseUrl } from 'views/Nft/market/constants'
 import { NftToken } from 'state/nftMarket/types'
-import { getBscScanLinkForNft } from 'utils'
-import EditProfileModal from 'views/Nft/market/Profile/components/EditProfileModal'
+// import { getBscScanLinkForNft } from 'utils'
+// import EditProfileModal from 'views/Nft/market/Profile/components/EditProfileModal'
 import { useProfile } from 'state/profile/hooks'
 import { Divider, HorizontalDivider, RoundedImage } from '../shared/styles'
 
@@ -24,18 +24,15 @@ const SellStage: React.FC<SellStageProps> = ({
   onSuccessEditProfile,
 }) => {
   const { t } = useTranslation()
-  const { hasProfile } = useProfile()
-  const itemPageUrlId =
-    nftToSell.collectionAddress.toLowerCase() === pancakeBunniesAddress.toLowerCase()
-      ? nftToSell.attributes[0].value
-      : nftToSell.tokenId
+  // const { hasProfile } = useProfile()
+  const itemPageUrlId = nftToSell.tokenId
 
-  const [onEditProfileModal] = useModal(<EditProfileModal onSuccess={onSuccessEditProfile} />, false)
+  // const [onEditProfileModal] = useModal(<EditProfileModal onSuccess={onSuccessEditProfile} />, false)
 
   return (
     <>
       <Flex p="16px">
-        <RoundedImage src={nftToSell.image.thumbnail} height={68} width={68} mr="8px" />
+        <RoundedImage src={nftToSell?.image?.thumbnail} height={68} width={68} mr="8px" />
         <Grid flex="1" gridTemplateColumns="1fr 1fr" alignItems="center">
           <Text bold>{nftToSell.name}</Text>
           <Text fontSize="12px" color="textSubtle" textAlign="right">
@@ -62,7 +59,7 @@ const SellStage: React.FC<SellStageProps> = ({
       <Flex justifyContent="space-between" px="16px" mt="8px">
         <Flex flex="2">
           <Text small color="textSubtle">
-            {t('Token ID: %id%', { id: nftToSell.tokenId })}
+            {/* {t('Token ID: %id%', { id: nftToSell.tokenId })} */}
           </Text>
         </Flex>
         <Flex justifyContent="space-between" flex="3">
@@ -77,13 +74,13 @@ const SellStage: React.FC<SellStageProps> = ({
             {t('View Item')}
           </Button>
           <HorizontalDivider />
-          <LinkExternal
+          {/* <LinkExternal
             p="0px"
             height="16px"
             href={getBscScanLinkForNft(nftToSell.collectionAddress, nftToSell.tokenId)}
           >
             BscScan
-          </LinkExternal>
+          </LinkExternal> */}
         </Flex>
       </Flex>
       <Divider />
@@ -94,11 +91,11 @@ const SellStage: React.FC<SellStageProps> = ({
         <Button mb="8px" variant="secondary" onClick={continueToTransferStage}>
           {t('Transfer')}
         </Button>
-        {hasProfile && (
+        {/* {hasProfile && (
           <Button variant="secondary" onClick={onEditProfileModal}>
             {t('Set as Profile Pic')}
           </Button>
-        )}
+        )} */}
       </Flex>
     </>
   )

@@ -7,11 +7,18 @@ const CollectibleActionCard: React.FC<CollectibleCardProps> = ({
   nftLocation,
   currentAskPrice,
   isUserNft,
+  sellToken,
   ...props
 }) => {
   return (
     <StyledCollectibleCard {...props}>
-      <CardBody nft={nft} nftLocation={nftLocation} currentAskPrice={currentAskPrice} isUserNft={isUserNft} />
+      <CardBody
+        nft={nft}
+        nftLocation={nftLocation}
+        currentAskPrice={currentAskPrice}
+        isUserNft={isUserNft}
+        sellToken={sellToken}
+      />
     </StyledCollectibleCard>
   )
 }

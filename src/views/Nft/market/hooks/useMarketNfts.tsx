@@ -42,7 +42,7 @@ const useMarketNfts = (isMyNft = false) => {
 
   useEffect(() => {
     if (account) loadNFTs()
-  }, [account])
+  }, [account, isMyNft])
 
   return { nfts, isFetchingNfts }
 }
