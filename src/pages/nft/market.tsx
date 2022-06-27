@@ -18,9 +18,6 @@ const MarketPage = () => {
             <Heading scale="md" color="text">
               {t('choose one your nft ')}
             </Heading>
-            <Heading scale="md" color="text">
-              {t('High APR, low risk.')}
-            </Heading>
           </Flex>
         </Flex>
       </PageHeader>

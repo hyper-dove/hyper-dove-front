@@ -1,4 +1,10 @@
+import NftList from 'components/NftList'
+
 const CreatePage = () => {
-  return <div></div>
+  return (
+    <div>
+      <NftList />
+    </div>
+  )
 }
 export default CreatePage

@@ -15,10 +15,7 @@ const caverKeys = {
   token: () => [...caverKeys.all, 'token'] as const,
 };
 
-export const useLoginWithKaikas = (options?: QueryOptions<string, Error>) => {
-  return useQuery<string, Error>(caverKeys.address(), getKaikasAddress, options);
-};
-
+≈≈
 export const useGetMyToken = (userAddress: string) => {
   return useQuery<number, Error, number>(caverKeys.token(), () => getMyMintRareToken(userAddress));
 };

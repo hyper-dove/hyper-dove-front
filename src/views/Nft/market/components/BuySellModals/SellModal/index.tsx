@@ -99,20 +99,18 @@ const SellModal: React.FC<SellModalProps> = ({
   const nftMarketPlaceContract = useNftMarketPlaceContract()
   const { fetchWithCatchTxError, loading: isLoadingTx } = useCatchTxError()
 
-  // const { reader: collectionContractReader, signer: collectionContractSigner } = useErc721CollectionContract(
-  //   nftToSell.collectionAddress,
-  // )
-  const nftMarketContract = useNftMarketPlaceContract()
-
   const isInvalidTransferAddress = transferAddress.length > 0 && !isAddress(transferAddress)
 
   const sellToken = async () => {
     console.log('nftToSell ', nftToSell)
     const nftPriceWei = parseUnits(nftToSell.price, 'ether')
     console.log('nftPriceWei = ', nftPriceWei)
+
+    let listingPrice = await nftMarketPlaceContract.getListingPrice()
+    console.log('listingPrice = ', listingPrice)
     const receipt = await fetchWithCatchTxError(() => {
-      return callWithGasPrice(nftMarketPlaceContract, 'resellToken', [nftToSell.tokenId, nftToSell.price], {
-        value: nftPriceWei,
+      return callWithGasPrice(nftMarketPlaceContract, 'resellToken', [nftToSell.tokenId, nftPriceWei], {
+        value: listingPrice.toString(),
       })
     })
     if (receipt?.status) {

@@ -5,7 +5,7 @@ import { create as ipfsHttpClient } from 'ipfs-http-client'
 import { useRouter } from 'next/router'
 import Web3Modal from 'web3modal'
 import useWeb3Provider from 'hooks/useActiveWeb3React'
-
+import Page from 'components/Layout/Page'
 import { getNftMarketPlaceAddress } from 'utils/addressHelpers'
 import { getNftMarketPlaceContract } from 'utils/contractHelpers'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
@@ -70,26 +70,33 @@ export default function CreateItem() {
   }
 
   return (
-    <Flex>
-      <Flex flexDirection="column">
-        <Input placeholder="Asset Name" onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })} />
+    <Page>
+      <Flex justifyContent="center">
+        <Flex flexDirection="column">
+          {fileUrl && <img width="350" src={fileUrl} />}
+          <Input style={{ marginBottom: '10px' }} type="file" name="Asset" className="my-4" onChange={onChange} />
 
-        <textarea
-          placeholder="Asset Description"
-          className="mt-2 border rounded p-4"
-          onChange={(e) => updateFormInput({ ...formInput, description: e.target.value })}
-        />
-        <input
-          placeholder="Asset Price in Eth"
-          className="mt-2 border rounded p-4"
-          onChange={(e) => updateFormInput({ ...formInput, price: e.target.value })}
-        />
-        <input type="file" name="Asset" className="my-4" onChange={onChange} />
-        {fileUrl && <img className="rounded mt-4" width="350" src={fileUrl} />}
-        <button onClick={listNFTForSale} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
-          Create NFT
-        </button>
+          <Input
+            style={{ marginBottom: '10px' }}
+            placeholder="Asset Name"
+            onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
+          />
+          <Input
+            style={{ marginBottom: '10px' }}
+            placeholder="Description"
+            onChange={(e) => updateFormInput({ ...formInput, description: e.target.value })}
+          />
+          <Input
+            style={{ marginBottom: '10px' }}
+            placeholder="Asset Price in Eth"
+            onChange={(e) => updateFormInput({ ...formInput, price: e.target.value })}
+          />
+
+          <button onClick={listNFTForSale} className="font-bold mt-4 bg-pink-500 text-white rounded p-4 shadow-lg">
+            Create NFT
+          </button>
+        </Flex>
       </Flex>
-    </Flex>
+    </Page>
   )
 }

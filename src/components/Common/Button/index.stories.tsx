@@ -1,21 +1,21 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import capitalize from "lodash/capitalize";
-import React, { useState } from "react";
-import { BrowserRouter, Link } from "react-router-dom";
-import styled from "styled-components";
-import Box from "../Box/Box";
-import Flex from "../Box/Flex";
-import { AddIcon, AutoRenewIcon, LogoIcon } from "../Svg";
-import IconButton from "./IconButton";
-import Button from "./Button";
-import { ExpandableButton, ExpandableLabel } from "./ExpandableButton";
-import { scales, variants } from "./types";
+import capitalize from 'lodash/capitalize'
+import React, { useState } from 'react'
+import { BrowserRouter, Link } from 'react-router-dom'
+import styled from 'styled-components'
+import Box from '../Box/Box'
+import Flex from '../Box/Flex'
+import { AddIcon, AutoRenewIcon, LogoIcon } from '../Svg'
+import IconButton from './IconButton'
+import Button from './Button'
+import { ExpandableButton, ExpandableLabel } from './ExpandableButton'
+import { scales, variants } from './types'
 
 export default {
-  title: "Components/Button",
+  title: 'Example/Button',
   component: Button,
   argTypes: {},
-};
+}
 
 const Row = styled(Flex)`
   margin-bottom: 32px;
@@ -23,7 +23,7 @@ const Row = styled(Flex)`
   & > a + a {
     margin-left: 16px;
   }
-`;
+`
 
 export const Default: React.FC = () => {
   return (
@@ -40,10 +40,10 @@ export const Default: React.FC = () => {
                   <Button key={scale} variant={variant} scale={scale} mr="8px">
                     {`${capitalize(variant)} ${scale.toUpperCase()}`}
                   </Button>
-                );
+                )
               })}
             </Box>
-          );
+          )
         })}
       </Box>
       <Box>
@@ -53,13 +53,13 @@ export const Default: React.FC = () => {
         <Button variant="secondary" mr="8px" disabled>
           Disabled
         </Button>
-        <Button disabled p="0 45px" decorator={{ text: "Soon" }}>
+        <Button disabled p="0 45px" decorator={{ text: 'Soon' }}>
           Locked
         </Button>
       </Box>
     </>
-  );
-};
+  )
+}
 
 export const Anchors: React.FC = () => {
   return (
@@ -81,10 +81,10 @@ export const Anchors: React.FC = () => {
                   >
                     {`${capitalize(variant)} anchor ${scale.toUpperCase()}`}
                   </Button>
-                );
+                )
               })}
             </Box>
-          );
+          )
         })}
       </Box>
       <Box>
@@ -96,8 +96,8 @@ export const Anchors: React.FC = () => {
         </Button>
       </Box>
     </>
-  );
-};
+  )
+}
 
 export const Variants: React.FC = () => {
   return (
@@ -144,11 +144,11 @@ export const Variants: React.FC = () => {
         </Row>
       </BrowserRouter>
     </Box>
-  );
-};
+  )
+}
 
 export const Expandable: React.FC = () => {
-  const [expanded, setExpanded] = useState(false);
+  const [expanded, setExpanded] = useState(false)
   return (
     <Box width="640px">
       <BrowserRouter>
@@ -160,5 +160,5 @@ export const Expandable: React.FC = () => {
         </Row>
       </BrowserRouter>
     </Box>
-  );
-};
+  )
+}
